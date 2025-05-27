@@ -13,15 +13,17 @@
 </head>
 <body>
 
-    <div id="login-container" style="display: none;">
-        <input type="email" id="email" placeholder="Email">
-        <input type="password" id="password" placeholder="Password">
-        <button id="google-login-btn">Zaloguj się przez Google</button>
-        <button id="login-btn">Log in</button>
+    <div id="login-container" style="display: none; text-align: center; padding: 2rem;">
+        <h2>Zaloguj się</h2>
+        <input type="email" id="email" placeholder="Email"><br>
+        <input type="password" id="password" placeholder="Password"><br>
+        <button id="login-btn">Log in (Email)</button><br><br>
+        <button id="google-login-btn">Log in with Google</button>
     </div>
 
     <div id="app-content" style="display: none;">
         <div class="app-container">
+            <button id="logout-btn" style="position: absolute; top: 10px; right: 10px;">Wyloguj</button>
             <!-- Header -->
             <header class="header">
                 <div class="header-content">

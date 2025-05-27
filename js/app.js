@@ -495,28 +495,40 @@ const auth = firebase.auth();
 const loginContainer = document.getElementById('login-container');
 const appContent = document.getElementById('app-content');
 const loginBtn = document.getElementById('login-btn');
-
-auth.onAuthStateChanged(user => {
-  if (user) {
-    loginContainer.style.display = 'none';
-    appContent.style.display = 'block';
-  } else {
-    loginContainer.style.display = 'block';
-    appContent.style.display = 'none';
-  }
-});
-
-loginBtn.addEventListener('click', () => {
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
-  auth.signInWithEmailAndPassword(email, password)
-    .catch(error => alert(error.message));
-});
-
 const googleLoginBtn = document.getElementById('google-login-btn');
+const logoutBtn = document.getElementById('logout-btn');
 
+// Monitoruj stan logowania
+auth.onAuthStateChanged(user => {
+    if (user) {
+        console.log('Zalogowany:', user.email || user.displayName);
+        loginContainer.style.display = 'none';
+        appContent.style.display = 'block';
+    } else {
+        console.log('Nie zalogowany');
+        loginContainer.style.display = 'block';
+        appContent.style.display = 'none';
+    }
+});
+
+// Logowanie email/hasło
+loginBtn.addEventListener('click', () => {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    auth.signInWithEmailAndPassword(email, password)
+        .catch(error => alert('Błąd logowania: ' + error.message));
+});
+
+// Logowanie przez Google
 googleLoginBtn.addEventListener('click', () => {
     const provider = new firebase.auth.GoogleAuthProvider();
     auth.signInWithPopup(provider)
-        .catch(error => alert(error.message));
+        .catch(error => alert('Błąd Google login: ' + error.message));
+});
+
+// Wylogowanie
+logoutBtn.addEventListener('click', () => {
+    auth.signOut()
+        .then(() => console.log('Wylogowano'))
+        .catch(error => alert('Błąd wylogowania: ' + error.message));
 });
