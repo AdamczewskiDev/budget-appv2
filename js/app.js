@@ -479,3 +479,44 @@ if ('serviceWorker' in navigator) {
             .catch(registrationError => console.log('SW registration failed'));
     });
 }
+
+const firebaseConfig = {
+    apiKey: "AIzaSyDFKzBw_92uGVDIA787gG7SzIikHuvBHiQ",
+    authDomain: "budgetapp-a7a90.firebaseapp.com",
+    projectId: "budgetapp-a7a90",
+    storageBucket: "budgetapp-a7a90.firebasestorage.app",
+    messagingSenderId: "240883982149",
+    appId: "1:240883982149:web:d9a300f1499bf3cd4be82c"
+};
+
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+
+const loginContainer = document.getElementById('login-container');
+const appContent = document.getElementById('app-content');
+const loginBtn = document.getElementById('login-btn');
+
+auth.onAuthStateChanged(user => {
+  if (user) {
+    loginContainer.style.display = 'none';
+    appContent.style.display = 'block';
+  } else {
+    loginContainer.style.display = 'block';
+    appContent.style.display = 'none';
+  }
+});
+
+loginBtn.addEventListener('click', () => {
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+  auth.signInWithEmailAndPassword(email, password)
+    .catch(error => alert(error.message));
+});
+
+const googleLoginBtn = document.getElementById('google-login-btn');
+
+googleLoginBtn.addEventListener('click', () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider)
+        .catch(error => alert(error.message));
+});
