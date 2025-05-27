@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mój Budżet - Zarządzanie finansami</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#667eea">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1><i class="fas fa-wallet"></i> Mój Budżet</h1>
+                <div class="header-stats">
+                    <div class="stat">
+                        <span class="stat-label">Do rozdania</span>
+                        <span class="stat-value" id="toAssign">0,00 zł</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="nav">
+            <button class="nav-btn active" data-view="budget">
+                <i class="fas fa-chart-pie"></i>
+                <span>Budżet</span>
+            </button>
+            <button class="nav-btn" data-view="accounts">
+                <i class="fas fa-credit-card"></i>
+                <span>Konta</span>
+            </button>
+            <button class="nav-btn" data-view="transactions">
+                <i class="fas fa-list"></i>
+                <span>Transakcje</span>
+            </button>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Budget View -->
+            <div class="view active" id="budget-view">
+                <div class="view-header">
+                    <h2>Budżet na <span id="currentMonth"></span></h2>
+                    <button class="btn btn-primary" id="addCategoryBtn">
+                        <i class="fas fa-plus"></i> Dodaj kategorię
+                    </button>
+                </div>
+
+                <div class="budget-grid">
+                    <div class="budget-categories" id="budgetCategories">
+                        <!-- Categories will be added here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Accounts View -->
+            <div class="view" id="accounts-view">
+                <div class="view-header">
+                    <h2>Twoje konta</h2>
+                    <button class="btn btn-primary" id="addAccountBtn">
+                        <i class="fas fa-plus"></i> Dodaj konto
+                    </button>
+                </div>
+
+                <div class="accounts-grid" id="accountsGrid">
+                    <!-- Accounts will be added here -->
+                </div>
+            </div>
+
+            <!-- Transactions View -->
+            <div class="view" id="transactions-view">
+                <div class="view-header">
+                    <h2>Wszystkie transakcje</h2>
+                    <button class="btn btn-primary" id="addTransactionBtn">
+                        <i class="fas fa-plus"></i> Dodaj transakcję
+                    </button>
+                </div>
+
+                <div class="transactions-list" id="transactionsList">
+                    <!-- Transactions will be added here -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <!-- Add Category Modal -->
+    <div class="modal" id="categoryModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Dodaj kategorię</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <form id="categoryForm">
+                <div class="form-group">
+                    <label for="categoryName">Nazwa kategorii</label>
+                    <input type="text" id="categoryName" required>
+                </div>
+                <div class="form-group">
+                    <label for="categoryBudget">Budżet</label>
+                    <input type="number" id="categoryBudget" step="0.01" min="0" required>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary modal-close">Anuluj</button>
+                    <button type="submit" class="btn btn-primary">Dodaj</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Account Modal -->
+    <div class="modal" id="accountModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Dodaj konto</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <form id="accountForm">
+                <div class="form-group">
+                    <label for="accountName">Nazwa konta</label>
+                    <input type="text" id="accountName" required>
+                </div>
+                <div class="form-group">
+                    <label for="accountBalance">Saldo początkowe</label>
+                    <input type="number" id="accountBalance" step="0.01" required>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary modal-close">Anuluj</button>
+                    <button type="submit" class="btn btn-primary">Dodaj</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Transaction Modal -->
+    <div class="modal" id="transactionModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Dodaj transakcję</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <form id="transactionForm">
+                <div class="form-group">
+                    <label for="transactionAccount">Konto</label>
+                    <select id="transactionAccount" required>
+                        <option value="">Wybierz konto</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="transactionCategory">Kategoria</label>
+                    <select id="transactionCategory" required>
+                        <option value="">Wybierz kategorię</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="transactionPayee">Odbiorca</label>
+                    <input type="text" id="transactionPayee" required>
+                </div>
+                <div class="form-group">
+                    <label for="transactionAmount">Kwota</label>
+                    <input type="number" id="transactionAmount" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="transactionDate">Data</label>
+                    <input type="date" id="transactionDate" required>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary modal-close">Anuluj</button>
+                    <button type="submit" class="btn btn-primary">Dodaj</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+    "name": "Mój Budżet",
+    "short_name": "Budżet",
+    "description": "Aplikacja do zarządzania budżetem domowym",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#667eea",
+    "theme_color": "#667eea",
+    "icons": [
+        {
+            "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTkyCiIgaGVpZ2h0PSIxOTIiIGZpbGw9IiM2NjdlZWEiLz48dGV4dCB4PSI5NiIgeT0iMTEwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iODAiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj7inII8L3RleHQ+PC9zdmc+",
+            "sizes": "192x192",
+            "type": "image/svg+xml"
+        }
+    ]
+}
